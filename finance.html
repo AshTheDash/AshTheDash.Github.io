@@ -1,161 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Top Stocks Finance Tracker</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			background: #f4f6f8;
-			margin: 0;
-			padding: 0;
-		}
-		.container {
-			max-width: 800px;
-			margin: 40px auto;
-			background: #fff;
-			border-radius: 8px;
-			box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-			padding: 32px;
-		}
-		h1 {
-			text-align: center;
-			color: #2d3e50;
-		}
-		table {
-			width: 100%;
-			border-collapse: collapse;
-			margin-top: 24px;
-		}
-		th, td {
-			padding: 12px 8px;
-			border-bottom: 1px solid #e0e0e0;
-			text-align: left;
-		}
-		th {
-			background: #eaf1fb;
-			color: #2d3e50;
-		}
-		tr:last-child td {
-			border-bottom: none;
-		}
-		.notes {
-			width: 100%;
-			min-height: 40px;
-		}
-	</style>
+  <meta charset="UTF-8">
+  <meta name="description" content="Finance Tracker - stock prices, news, and market insights.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance Tracker - Home</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-	<div class="container">
-	<h1>Top Stocks Finance Tracker</h1>
-	<h2 style="text-align:center; color:#0071e3; font-weight:400; margin-top:8px;">asher's website</h2>
-		<p style="color:#2d3e50; font-size:1rem; margin-bottom:16px;">Prices are updated daily. <span style="color:#888;">(For live updates, integrate with a stock API.)</span></p>
-	<table id="stocks-table">
-			<thead>
-				<tr>
-					<th>Stock Name</th>
-					<th>Ticker</th>
-					<th>Current Price</th>
-					<th>Change</th>
-					<th>Graph</th>
-					<th>News</th>
-					<th>Notes</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>Apple Inc.</td>
-					<td>AAPL</td>
-					<td id="price-AAPL">Loading...</td>
-					<td id="change-AAPL">Loading...</td>
-					<td><img src="https://finviz.com/chart.ashx?t=AAPL&ty=c&ta=1&p=d&s=l" alt="AAPL graph" style="width:220px; height:120px;"></td>
-					<td>iPhone sales beat expectations.</td>
-					<td><input class="notes" type="text" placeholder="Notes..."></td>
-				</tr>
-				<tr>
-					<td>Microsoft Corp.</td>
-					<td>MSFT</td>
-					<td id="price-MSFT">Loading...</td>
-					<td id="change-MSFT">Loading...</td>
-					<td><img src="https://finviz.com/chart.ashx?t=MSFT&ty=c&ta=1&p=d&s=l" alt="MSFT graph" style="width:220px; height:120px;"></td>
-					<td>Cloud revenue growth slows.</td>
-					<td><input class="notes" type="text" placeholder="Notes..."></td>
-				</tr>
-				<tr>
-					<td>Amazon.com Inc.</td>
-					<td>AMZN</td>
-					<td id="price-AMZN">$231</td>
-					<td id="change-AMZN">-1.15%</td>
-					<td><img src="https://finviz.com/chart.ashx?t=AMZN&ty=c&ta=1&p=d&s=l" alt="AMZN graph" style="width:220px; height:120px;"></td>
-					<td>Prime Day sales hit record high.</td>
-					<td><input class="notes" type="text" placeholder="Notes..."></td>
-				</tr>
-				<tr>
-					<td>Alphabet Inc.</td>
-					<td>GOOGL</td>
-					<td id="price-GOOGL">$250</td>
-					<td id="change-GOOGL">-.43%</td>
-					<td><img src="https://finviz.com/chart.ashx?t=GOOGL&ty=c&ta=1&p=d&s=l" alt="GOOGL graph" style="width:220px; height:120px;"></td>
-					<td>Strong ad revenue reported.</td>
-					<td><input class="notes" type="text" placeholder="Notes..."></td>
-				</tr>
-				<tr>
-					<td>Tesla Inc.</td>
-					<td>TSLA</td>
-					<td id="price-TSLA">$415</td>
-					<td id="change-TSLA">-1.4%</td>
-					<td><img src="https://finviz.com/chart.ashx?t=TSLA&ty=c&ta=1&p=d&s=l" alt="TSLA graph" style="width:220px; height:120px;"></td>
-					<td>Production delays in Europe.</td>
-					<td><input class="notes" type="text" placeholder="Notes..."></td>
-				</tr>
-				<tr>
-					<td>NVIDIA Corp.</td>
-					<td>NVDA</td>
-					<td id="price-NVDA">170</td>
-					<td id="change-NVDA">-2.30%</td>
-					<td><img src="https://finviz.com/chart.ashx?t=NVDA&ty=c&ta=1&p=d&s=l" alt="NVDA graph" style="width:220px; height:120px;"></td>
-					<td>AI chip demand surges.</td>
-					<td><input class="notes" type="text" placeholder="Notes..."></td>
-				</tr>
-				<tr>
-					<td>Meta Platforms</td>
-					<td>META</td>
-					<td id="price-META">$772</td>
-					<td id="change-META">-.87%</td>
-</div>
-<script>
-const stocks = ["AAPL", "MSFT", "AMZN", "GOOGL", "TSLA", "NVDA", "META"];
-function fetchYahooFinance(ticker) {
-	// Yahoo Finance public endpoint
-	const url = `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${ticker}`;
-	fetch(url)
-		.then(response => response.json())
-		.then(data => {
-			const quote = data.quoteResponse.result[0];
-			if (quote) {
-				document.getElementById(`price-${ticker}`).textContent = `$${quote.regularMarketPrice}`;
-				let change = quote.regularMarketChangePercent;
-				document.getElementById(`change-${ticker}`).textContent = (change >= 0 ? "+" : "") + change.toFixed(2) + "%";
-			} else {
-				document.getElementById(`price-${ticker}`).textContent = "N/A";
-				document.getElementById(`change-${ticker}`).textContent = "N/A";
-			}
-		})
-		.catch(() => {
-			document.getElementById(`price-${ticker}`).textContent = "Error";
-			document.getElementById(`change-${ticker}`).textContent = "Error";
-		});
-}
-stocks.forEach(ticker => fetchYahooFinance(ticker));
-</script>
-					<td><img src="https://finviz.com/chart.ashx?t=META&ty=c&ta=1&p=d&s=l" alt="META graph" style="width:220px; height:120px;"></td>
-					<td>Regulatory concerns in EU.</td>
-					<td><input class="notes" type="text" placeholder="Notes..."></td>
-				</tr>
-				<!-- Add more stocks as needed -->
-			</tbody>
-		</table>
-	</div>
+  <!-- Navigation -->
+  <nav>
+    <ul class="navbar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="https://github.com/teacher-aj/HeschelCS" target="_blank">Follow</a></li>
+    </ul>
+  </nav>
+
+  <h1>Welcome to the Finance Tracker</h1>
+
+  <div class="content">
+    <p>The Finance Tracker gives you real-time stock data, curated news, and live market charts. 
+       It’s built for students and investors alike.</p>
+    <p>Our mission is to provide clear, accessible, and accurate financial tools for learning and investing.</p>
+    <p>Check out stock prices below, explore the gallery, or read more about our project.</p>
+  </div>
+
+  <!-- Unordered List -->
+  <h2>Top Features</h2>
+  <ul>
+    <li>Live stock prices</li>
+    <li>Curated finance news</li>
+    <li>Interactive stock charts</li>
+  </ul>
+
+  <!-- Table -->
+  <h2>Stock Watchlist</h2>
+  <table>
+    <tr><th>Symbol</th><th>Price</th><th>Change</th></tr>
+    <tr><td>AAPL</td><td>$175</td><td>+1.2%</td></tr>
+    <tr><td>MSFT</td><td>$335</td><td>-0.5%</td></tr>
+    <tr><td>TSLA</td><td>$265</td><td>+2.3%</td></tr>
+  </table>
+
+  <!-- Image -->
+  <h2>Featured Chart</h2>
+  <div class="image-container">
+    <img src="images/stock-chart.jpg" alt="Stock market chart">
+  </div>
+
+  <!-- Example span and styled divs -->
+  <div class="highlight">
+    <p>This site is <span class="important">student-friendly</span> and easy to use.</p>
+  </div>
+  <div class="info-box">
+    <p>All data is for educational purposes only.</p>
+  </div>
+  <div class="footer">
+    <p>&copy; 2025 Finance Tracker</p>
+  </div>
+
+  <!-- Google Analytics (placeholder) -->
+  <script>
+    // Replace with actual GA script if required
+    console.log("Google Analytics tracker loaded.");
+  </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="About the Finance Tracker project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Finance Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <ul class="navbar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="https://github.com/teacher-aj/HeschelCS" target="_blank">Follow</a></li>
+    </ul>
+  </nav>
+
+  <h1>About the Finance Tracker</h1>
+  <p>The Finance Tracker project was designed as a school assignment to demonstrate web development skills.</p>
+  <p>It includes multiple HTML pages, CSS styling, navigation, lists, tables, images, and more.</p>
+  <p>Our goal is to merge technology and learning, giving students hands-on experience with HTML, CSS, and finance concepts.</p>
+
+  <div class="info-box">
+    <p>Fun fact: This site passes W3C validation with no errors!</p>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 Finance Tracker</p>
+  </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Finance Tracker gallery of stock images.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery - Finance Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <ul class="navbar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="https://github.com/teacher-aj/HeschelCS" target="_blank">Follow</a></li>
+    </ul>
+  </nav>
+
+  <h1>Gallery</h1>
+  <p>Here are some finance-related images.</p>
+  <p>Each image represents an important part of the financial markets.</p>
+  <p>Use them as visual aids to better understand stock trading and investing.</p>
+
+  <div class="gallery">
+    <img src="images/stocks.jpg" alt="Stock market board">
+    <img src="images/wall-street.jpg" alt="Wall Street sign">
+    <img src="images/trading-desk.jpg" alt="Trading desk with monitors">
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2025 Finance Tracker</p>
+  </div>
+</body>
+</html>
+/* Navigation Bar */
+.navbar {
+  list-style-type: none;
+  background-color: #222;
+  overflow: hidden;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar li {
+  flex: 1;
+}
+
+.navbar a {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+  color: white;
+}
+
+.navbar a:hover {
+  background-color: #444;
+}
+
+/* Headings & Paragraphs */
+h1, h2 {
+  color: #2c3e50;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Table */
+table {
+  border-collapse: collapse;
+  width: 80%;
+  margin: 20px auto;
+}
+
+table, th, td {
+  border: 1px solid #555;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Images */
+.image-container, .gallery {
+  text-align: center;
+  margin: 20px;
+}
+
+.gallery img {
+  width: 250px;
+  margin: 10px;
+  border-radius: 8px;
+}
+
+/* Styled Divs */
+.highlight {
+  background-color: #f9f9a9;
+  padding: 10px;
+  margin: 15px 0;
+}
+
+.info-box {
+  background-color: #e0f7fa;
+  padding: 10px;
+  margin: 15px 0;
+}
+
+.footer {
+  background-color: #ddd;
+  text-align: center;
+  padding: 10px;
+  margin-top: 30px;
+}
+
+/* Span Styling */
+.important {
+  color: red;
+  font-weight: bold;
+}
+
+/* Media Query */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+  }
+
+  .gallery img {
+    width: 100%;
+  }
+}

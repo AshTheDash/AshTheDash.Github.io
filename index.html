@@ -1,10 +1,59 @@
 <!DOCTYPE html>
- <html>
- <head>
-   <title>My First Webpage</title>
- </head>
- <body>
-   <h1>Hello, World!</h1>
-   <p>This is my very first webpage.</p>
- </body>
- </html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Finance Tracker - Homepage with stock info, list, and table">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance Tracker - Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <ul class="navbar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+    </ul>
+  </nav>
+
+  <h1>Welcome to Finance Tracker</h1>
+  <p>This website introduces the basics of finance, investing, and stock tracking.</p>
+
+  <p><a href="https://github.com/teacher-aj/HeschelCS" target="_blank">Follow the course webpage here</a></p>
+
+  <h2>Top 3 Investing Tips</h2>
+  <ul>
+    <li>Diversify your portfolio</li>
+    <li>Invest for the long term</li>
+    <li>Do your own research</li>
+  </ul>
+
+  <h2>Company Data</h2>
+  <table>
+    <tr><th>Company</th><th>Ticker</th><th>Price</th></tr>
+    <tr><td>Apple</td><td>AAPL</td><td>$170</td></tr>
+    <tr><td>Tesla</td><td>TSLA</td><td>$250</td></tr>
+    <tr><td>Amazon</td><td>AMZN</td><td>$130</td></tr>
+  </table>
+
+  <!-- Finance-specific images -->
+  <h2>Market Images</h2>
+  <a href="https://finance.yahoo.com/" target="_blank"><img src="https://images.unsplash.com/photo-1569025690938-a00729c9e1d7" alt="Stock market screen" width="300"></a>
+  <a href="https://www.investopedia.com/" target="_blank"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40" alt="Person analyzing financial reports" width="300"></a>
+  <a href="https://www.nasdaq.com/" target="_blank"><img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a" alt="Laptop showing stock charts" width="300"></a>
+
+  <div class="highlight-box"><p>This is a <span class="important">highlighted</span> finance note styled with CSS.</p></div>
+  <div class="info-box"><p>Use external CSS for consistent styling across pages.</p></div>
+  <div class="footer-box"><p>Footer information here.</p></div>
+
+  <script>console.log("Google Analytics placeholder");</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX-X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-XXXXXX-X');
+  </script>
+</body>
+</html>
+
